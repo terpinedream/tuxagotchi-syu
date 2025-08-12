@@ -6,11 +6,11 @@ from pathlib import Path
 def load_config():
     """Load config from user's config directory or fallback to local config.toml"""
 
-    # Check for user config first
-    user_config_path = Path.home() / ".config" / "tuxagotchi" / "config.toml"
+    # Check for user config first (specific to tuxagotchi-syu)
+    user_config_path = Path.home() / ".config" / "tuxagotchi-syu" / "config.toml"
 
     # Check for environment variable (set by launcher script)
-    env_config_path = os.getenv("TUXAGOTCHI_CONFIG_PATH")
+    env_config_path = os.getenv("TUXAGOTCHI_SYU_CONFIG_PATH")
     if env_config_path:
         config_path = Path(env_config_path)
     elif user_config_path.exists():
@@ -24,7 +24,7 @@ def load_config():
         print(f"Loaded config from: {config_path}")
     except FileNotFoundError:
         print(f"Config file not found at {config_path}")
-        print("Please run 'tuxagotchi' to set up your configuration.")
+        print("Please run 'tuxagotchi-syu' to set up your configuration.")
         # Return minimal config to prevent crashes
         config = {
             "github": {
