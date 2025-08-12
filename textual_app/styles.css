@@ -1,3 +1,4 @@
+
 Screen {
   background: black;
   border: none;
@@ -9,12 +10,6 @@ Screen {
     height: 100%;
     width: 100%;
     padding: 0 0 0 0;
-}
-
-#root-container {
-    background: transparent;
-    height: 100%;
-    width: 100%;
 }
 
 #tux-widget {
@@ -41,7 +36,6 @@ Screen {
     border: round white;
     background: transparent;
     color: white;
-    scrollbar-size-vertical: 1;
 }
 
 #pacman-button {
@@ -49,30 +43,4 @@ Screen {
     background: transparent;
     color: white;
     margin: 1 0;
-    height: 3;
-}
-
-#pacman-button:hover {
-    color: red;
-}
-
-#pacman-button:disabled {
-    color: darkgray;
-    border: round gray;
-}
-
-#password-input {
-    border: round white;
-    background: transparent;
-    color: white;
-    margin: 1 0;
-    height: 3;
-}
-
-#keybinds {
-    dock: bottom;
-    height: 1;
-    background: transparent;
-    color: white;
-    padding: 0 1;
 }
