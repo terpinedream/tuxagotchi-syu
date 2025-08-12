@@ -14,9 +14,8 @@ A virtual pet that tracks your Arch Linux system updates.
 
 - Tracks Pacman updates and reflects system health.
 - Configurable via a TOML config file.
-- Supports GitHub integration for advanced stats.
 - Customizable color themes.
-- Simple and lightweight, built with Python and Textual.
+- Built with Python and Textual.
 
 ---
 
