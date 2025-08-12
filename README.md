@@ -43,7 +43,7 @@ On first run, a config file will be created at:
 
 ```
 ~/.config/tuxagotchi-syu/config.toml
-
+```
 ---
 
 ## Thanks
