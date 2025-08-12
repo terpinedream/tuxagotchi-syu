@@ -44,19 +44,6 @@ On first run, a config file will be created at:
 
 ```
 ~/.config/tuxagotchi-syu/config.toml
-```
-
-Edit this file to customize the app and add GitHub integration.
-
----
-
-## Configuration
-
-The config file uses [TOML](https://toml.io/en/) format. You can adjust:
-
-- GitHub credentials for commit tracking.
-- Color themes.
-- Other preferences.
 
 ---
 
