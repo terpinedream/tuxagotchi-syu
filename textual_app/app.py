@@ -23,8 +23,9 @@ from rich import box
 # UI Helper Functions (formerly in ui.py and ui_helpers.py)
 def load_ascii(mood: str, tick: int) -> str:
     """Load ASCII art from two alternating files per mood for animation"""
-    base_path = f"assets/{mood}.txt"
-    alt_path = f"assets/{mood}2.txt"
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    base_path = os.path.join(script_dir, "assets", f"{mood}.txt")
+    alt_path = os.path.join(script_dir, "assets", f"{mood}2.txt")
 
     try:
         with open(base_path) as f:
@@ -257,11 +258,13 @@ class PacmanWidget(Widget):
         container = self.query_one("#pacman-container")
         container.refresh()
 
-        self.output_display.update(self.output_display.renderable + "\nType your password and press ENTER:")
-        
+        self.output_display.update(
+            self.output_display.renderable + "\nType your password and press ENTER:"
+        )
+
         # Focus the password display
         self.password_display.focus()
-        
+
         log(f"Password input ready: waiting_for_password={self.waiting_for_password}")
 
     async def on_button_pressed(self, event: Button.Pressed) -> None:
@@ -470,7 +473,7 @@ class PacmanWidget(Widget):
                 event.stop()
                 return
 
-        # Allow EaSC to cancel running update
+        # Allow ESC to cancel running update
         if event.key == "escape" and self._is_running and self.process:
             try:
                 self.process.terminate()
@@ -486,7 +489,16 @@ class TuxApp(App):
     """Main Tuxagotchi Textual App"""
 
     BINDINGS = [("q", "quit", "Quit")]
-    CSS_PATH = "styles.css"
+
+    def __init__(self):
+        super().__init__()
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        css_file = os.path.join(script_dir, "styles.css")
+        if os.path.exists(css_file):
+            self.CSS_PATH = css_file
+        else:
+            # Fallback for development
+            self.CSS_PATH = "styles.css"
 
     async def on_mount(self) -> None:
         # Preload ascii for better performance
@@ -560,11 +572,18 @@ class TuxApp(App):
 
 def generate_css_file():
     """Generate the CSS file with current config colors"""
-    css_path = "textual_app/styles.css"
-    if not os.path.exists(css_path):
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    css_path = os.path.join(script_dir, "styles.css")
+
+    # Only generate if it doesn't exist or if we're in development mode
+    if not os.path.exists(css_path) or os.path.exists("config.toml"):
         config = load_config()
         colors = config["colors"]
         css = generate_css(colors)
+
+        # Make sure the directory exists
+        os.makedirs(os.path.dirname(css_path), exist_ok=True)
+
         with open(css_path, "w") as f:
             f.write(css)
 

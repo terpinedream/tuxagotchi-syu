@@ -18,7 +18,12 @@ class Tux:
         self.load_frames()
 
     def load_frames(self):
-        assets_dir = Path(__file__).parent / "assets"
+        # Get the directory where the main script is located
+        script_dir = Path(
+            __file__
+        ).parent.parent  # Go up from textual_app/ to main directory
+        assets_dir = script_dir / "assets"
+
         for mood in ["happy", "neutral", "sad"]:
             for i in range(1, 3):
                 frame_file = assets_dir / f"{mood}_{i}.txt"

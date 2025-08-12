@@ -3,10 +3,11 @@ from datetime import timedelta
 import os
 
 
-# Load ASCII art from two alternating files per mood for animation
 def load_ascii(mood: str, tick: int) -> str:
-    base_path = f"assets/{mood}.txt"
-    alt_path = f"assets/{mood}2.txt"
+    """Load ASCII art from two alternating files per mood for animation"""
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    base_path = os.path.join(script_dir, "..", "assets", f"{mood}.txt")
+    alt_path = os.path.join(script_dir, "..", "assets", f"{mood}2.txt")
 
     try:
         with open(base_path) as f:
@@ -28,6 +29,7 @@ def load_ascii(mood: str, tick: int) -> str:
 
 
 def format_timedelta(td: timedelta) -> str:
+    """Format timedelta into concise string (seconds, minutes, hours, days)"""
     seconds = int(td.total_seconds())
     if seconds < 60:
         return f"{seconds}s"
@@ -39,14 +41,8 @@ def format_timedelta(td: timedelta) -> str:
         return f"{seconds // 86400}d"
 
 
-# Custom styles container
-class CustomStyles:
-    tux_style = None
-    todo_style = None
-
-
-# Generate block progress bar for mood countdowns
 def generate_block_bar(tux: object, tick: int, length: int = 10) -> str:
+    """Generate block progress bar for mood countdowns"""
     if not hasattr(tux, "mood") or not hasattr(tux, "time_until_next_mood"):
         return "[Invalid Tux object]"
 
@@ -76,25 +72,25 @@ def generate_block_bar(tux: object, tick: int, length: int = 10) -> str:
 
 
 def center_ascii(art: str, width: int = 32) -> str:
+    """Center ASCII art horizontally given a target width"""
     lines = art.splitlines()
     return "\n".join(line.center(width) for line in lines)
 
 
 def generate_css(colors: dict) -> str:
-    """
-    Generate CSS string with colors from config.
-    """
+    """Generate CSS string with colors from config"""
     return f"""
+Screen {{
+  background: black;
+  border: none;
+  padding: 0;
+  margin: 0;
+}}
+
 #main-container {{
     height: 100%;
     width: 100%;
-    overflow: hidden;
-    padding: 1 1 1 1;
-}}
-
-#root-container {{
-    height: 100%;
-    width: 100%;
+    padding: 0 0 0 0;
 }}
 
 #tux-widget {{
@@ -106,7 +102,7 @@ def generate_css(colors: dict) -> str:
     color: {colors["foreground"]};
 }}
 
-#todo-widget {{
+#pacman-widget {{
     min-width: 20;
     max-width: 20;
     padding: 1 2;
@@ -117,19 +113,16 @@ def generate_css(colors: dict) -> str:
     overflow-y: auto;
 }}
 
-#cava-widget {{
-    height: 2;
-    width: 100%;
-    padding: 1 2;
-    margin: 1 0 0 0;
-    border: round {colors["accent"]};
-    background: {colors["background"]};
-    color: {colors["foreground"]};
-}}
-
-#todo-input {{
+#pacman-output {{
     border: round white;
     background: transparent;
     color: {colors["foreground"]};
+}}
+
+#pacman-button {{
+    border: round white;
+    background: transparent;
+    color: {colors["foreground"]};
+    margin: 1 0;
 }}
 """
